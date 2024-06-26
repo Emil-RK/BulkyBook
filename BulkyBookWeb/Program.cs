@@ -1,3 +1,7 @@
+/// https://www.youtube.com/watch?v=hZ1DASYd9rk
+/// https://github.com/bhrugen/Bulky/tree/3d83a49c70ebf3ed043e9415a0dcd782f62f5bf7
+///
+
 using BulkyBookWeb.Data;
 using Microsoft.EntityFrameworkCore;
 

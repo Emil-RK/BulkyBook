@@ -38,6 +38,7 @@ namespace BulkyBookWeb.Controllers
             {
                 _db.Categories.Add(obj);
                 _db.SaveChanges();
+                TempData["success"] = "Category created successfully";
                 return RedirectToAction("Index");
             }
 
@@ -52,10 +53,10 @@ namespace BulkyBookWeb.Controllers
                 return NotFound();
             }
             var categoryFromDB = _db.Categories.Find(id);
-           // var categoryFromDBFirst = _db.Categories.FirstOrDefault(i => i.Id == id);
-           // var categoryFromDBSingle = _db.Categories.SingleOrDefault(i => i.Id == id);
+            // var categoryFromDBFirst = _db.Categories.FirstOrDefault(i => i.Id == id);
+            // var categoryFromDBSingle = _db.Categories.SingleOrDefault(i => i.Id == id);
 
-            if(categoryFromDB == null)
+            if (categoryFromDB == null)
             {
                 return NotFound();
             }
@@ -76,10 +77,46 @@ namespace BulkyBookWeb.Controllers
             {
                 _db.Categories.Update(obj);
                 _db.SaveChanges();
+                TempData["success"] = "Category updated successfully";
                 return RedirectToAction("Index");
             }
 
             return View(obj);
+        }
+
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var categoryFromDB = _db.Categories.Find(id);
+            // var categoryFromDBFirst = _db.Categories.FirstOrDefault(i => i.Id == id);
+            // var categoryFromDBSingle = _db.Categories.SingleOrDefault(i => i.Id == id);
+
+            if (categoryFromDB == null)
+            {
+                return NotFound();
+            }
+
+            return View(categoryFromDB);
+        }
+
+        //POST
+        [HttpPost,ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeletePOST(int? id)
+        {
+            var obj = _db.Categories.Find(id);
+            if(obj == null)
+            {
+                return NotFound();
+            }
+
+            _db.Categories.Remove(obj);
+            _db.SaveChanges();
+            TempData["success"] = "Category deleted successfully";
+            return RedirectToAction("Index");
         }
     }
 }
